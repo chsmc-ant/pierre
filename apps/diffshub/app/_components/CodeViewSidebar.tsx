@@ -1,5 +1,6 @@
 'use client';
 
+import type { CodeViewHandle } from '@pierre/diffs/react';
 import {
   IconComment,
   IconFileTree,
@@ -28,6 +29,7 @@ import type {
   CodeViewFileTreeSource,
   CodeViewSavedCommentEntry,
   CodeViewSavedCommentItem,
+  CommentMetadata,
 } from './types';
 import type { ThemeCycleControls } from './useThemeCycle';
 import { WorkerPoolStatus } from './WorkerPoolStatus';
@@ -52,6 +54,7 @@ interface CodeViewSidebarProps {
   source: CodeViewFileTreeSource;
   streaming: boolean;
   themeCycle: ThemeCycleControls;
+  viewerRef: RefObject<CodeViewHandle<CommentMetadata> | null>;
 }
 
 export const CodeViewSidebar = memo(function CodeViewSidebar({
@@ -66,6 +69,7 @@ export const CodeViewSidebar = memo(function CodeViewSidebar({
   source,
   streaming,
   themeCycle,
+  viewerRef,
 }: CodeViewSidebarProps) {
   const [activeTab, setActiveTab] = useState<SidebarTab>('files');
   let totalCommentCount = 0;
@@ -238,7 +242,7 @@ export const CodeViewSidebar = memo(function CodeViewSidebar({
         <WorkerPoolStatus
           expanded={activeStatusPanel === 'systemMonitor'}
           onToggle={() => toggleStatusPanel('systemMonitor')}
-          scrollRef={scrollRef}
+          viewerRef={viewerRef}
           themeCycle={themeCycle}
         />
       </SidebarWrapper>
