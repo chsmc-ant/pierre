@@ -67,7 +67,7 @@ interface ResetLayoutCacheOptions {
   includeEstimatedHeights?: boolean;
 }
 
-const LAYOUT_CHECKPOINT_INTERVAL = 5_000;
+export const VIRTUALIZED_FILE_DIFF_LAYOUT_CHECKPOINT_INTERVAL = 3_000;
 
 let instanceId = -1;
 
@@ -966,7 +966,7 @@ export class VirtualizedFileDiff<
           lineIndex: startLineIndex + offset,
           top: checkpointTop,
         });
-        nextCheckpoint += LAYOUT_CHECKPOINT_INTERVAL;
+        nextCheckpoint += VIRTUALIZED_FILE_DIFF_LAYOUT_CHECKPOINT_INTERVAL;
       }
 
       top +=
@@ -1495,8 +1495,9 @@ function lowerBound(values: number[], target: number): number {
 
 function getNextCheckpointIndex(renderedLineIndex: number): number {
   return (
-    Math.ceil(renderedLineIndex / LAYOUT_CHECKPOINT_INTERVAL) *
-    LAYOUT_CHECKPOINT_INTERVAL
+    Math.ceil(
+      renderedLineIndex / VIRTUALIZED_FILE_DIFF_LAYOUT_CHECKPOINT_INTERVAL
+    ) * VIRTUALIZED_FILE_DIFF_LAYOUT_CHECKPOINT_INTERVAL
   );
 }
 

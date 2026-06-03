@@ -1,6 +1,9 @@
 import { describe, expect, test } from 'bun:test';
 
-import { VirtualizedFileDiff } from '../src/components/VirtualizedFileDiff';
+import {
+  VIRTUALIZED_FILE_DIFF_LAYOUT_CHECKPOINT_INTERVAL,
+  VirtualizedFileDiff,
+} from '../src/components/VirtualizedFileDiff';
 import { DEFAULT_CODE_VIEW_FILE_METRICS } from '../src/constants';
 import type {
   FileDiffMetadata,
@@ -431,7 +434,9 @@ describe('VirtualizedFileDiff estimated height cache', () => {
     });
     expect(inspect(instance).cache.totalLines).toBe(lineCount);
     expect(inspect(instance).cache.checkpoints.length).toBe(
-      Math.floor((lineCount - 1) / 5_000) + 1
+      Math.floor(
+        (lineCount - 1) / VIRTUALIZED_FILE_DIFF_LAYOUT_CHECKPOINT_INTERVAL
+      ) + 1
     );
   });
 });
